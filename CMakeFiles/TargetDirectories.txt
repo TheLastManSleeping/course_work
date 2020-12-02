@@ -1,0 +1,3 @@
+/home/Arter/ABC/CMakeFiles/rebuild_cache.dir
+/home/Arter/ABC/CMakeFiles/riscv_sim.dir
+/home/Arter/ABC/CMakeFiles/edit_cache.dir

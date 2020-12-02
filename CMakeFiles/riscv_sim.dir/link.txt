@@ -1,0 +1,1 @@
+/usr/bin/c++.exe    -Wl,--enable-auto-import CMakeFiles/riscv_sim.dir/src/Instruction.cpp.o CMakeFiles/riscv_sim.dir/src/main.cpp.o  -o riscv_sim.exe -Wl,--out-implib,libriscv_sim.dll.a -Wl,--major-image-version,0,--minor-image-version,0 
