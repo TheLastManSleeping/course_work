@@ -1,0 +1,180 @@
+        -:    0:Source:/home/Arter/ABC2/Google_tests/lib/googletest/src/gtest-typed-test.cc
+        -:    0:Graph:/home/Arter/ABC2/Google_tests/lib/googletest/CMakeFiles/gtest.dir/src/gtest-all.cc.gcno
+        -:    0:Data:/home/Arter/ABC2/Google_tests/lib/googletest/CMakeFiles/gtest.dir/src/gtest-all.cc.gcda
+        -:    0:Runs:1
+        -:    1:// Copyright 2008 Google Inc.
+        -:    2:// All Rights Reserved.
+        -:    3://
+        -:    4:// Redistribution and use in source and binary forms, with or without
+        -:    5:// modification, are permitted provided that the following conditions are
+        -:    6:// met:
+        -:    7://
+        -:    8://     * Redistributions of source code must retain the above copyright
+        -:    9:// notice, this list of conditions and the following disclaimer.
+        -:   10://     * Redistributions in binary form must reproduce the above
+        -:   11:// copyright notice, this list of conditions and the following disclaimer
+        -:   12:// in the documentation and/or other materials provided with the
+        -:   13:// distribution.
+        -:   14://     * Neither the name of Google Inc. nor the names of its
+        -:   15:// contributors may be used to endorse or promote products derived from
+        -:   16:// this software without specific prior written permission.
+        -:   17://
+        -:   18:// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+        -:   19:// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+        -:   20:// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+        -:   21:// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+        -:   22:// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+        -:   23:// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+        -:   24:// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+        -:   25:// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+        -:   26:// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+        -:   27:// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+        -:   28:// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+        -:   29:
+        -:   30:
+        -:   31:#include "gtest/gtest-typed-test.h"
+        -:   32:
+        -:   33:#include "gtest/gtest.h"
+        -:   34:
+        -:   35:namespace testing {
+        -:   36:namespace internal {
+        -:   37:
+        -:   38:#if GTEST_HAS_TYPED_TEST_P
+        -:   39:
+        -:   40:// Skips to the first non-space char in str. Returns an empty string if str
+        -:   41:// contains only whitespace characters.
+    #####:   42:static const char* SkipSpaces(const char* str) {
+    #####:   43:  while (IsSpace(*str))
+    %%%%%:   43-block  0
+    #####:   44:    str++;
+    %%%%%:   44-block  0
+    #####:   45:  return str;
+    %%%%%:   45-block  0
+        -:   46:}
+        -:   47:
+    #####:   48:static std::vector<std::string> SplitIntoTestNames(const char* src) {
+    #####:   49:  std::vector<std::string> name_vec;
+    %%%%%:   49-block  0
+    #####:   50:  src = SkipSpaces(src);
+    #####:   51:  for (; src != nullptr; src = SkipComma(src)) {
+    %%%%%:   51-block  0
+    #####:   52:    name_vec.push_back(StripTrailingSpaces(GetPrefixUntilComma(src)));
+    %%%%%:   52-block  0
+    %%%%%:   52-block  1
+    %%%%%:   52-block  2
+    %%%%%:   52-block  3
+    $$$$$:   52-block  4
+    $$$$$:   52-block  5
+    $$$$$:   52-block  6
+    $$$$$:   52-block  7
+        -:   53:  }
+    #####:   54:  return name_vec;
+    %%%%%:   54-block  0
+    %%%%%:   54-block  1
+        -:   55:}
+        -:   56:
+        -:   57:// Verifies that registered_tests match the test names in
+        -:   58:// registered_tests_; returns registered_tests if successful, or
+        -:   59:// aborts the program otherwise.
+    #####:   60:const char* TypedTestSuitePState::VerifyRegisteredTestNames(
+        -:   61:    const char* test_suite_name, const char* file, int line,
+        -:   62:    const char* registered_tests) {
+    #####:   63:  RegisterTypeParameterizedTestSuite(test_suite_name, CodeLocation(file, line));
+    %%%%%:   63-block  0
+    %%%%%:   63-block  1
+    %%%%%:   63-block  2
+    %%%%%:   63-block  3
+    $$$$$:   63-block  4
+    $$$$$:   63-block  5
+    $$$$$:   63-block  6
+    $$$$$:   63-block  7
+        -:   64:
+        -:   65:  typedef RegisteredTestsMap::const_iterator RegisteredTestIter;
+    #####:   66:  registered_ = true;
+        -:   67:
+    #####:   68:  std::vector<std::string> name_vec = SplitIntoTestNames(registered_tests);
+    $$$$$:   68-block  0
+        -:   69:
+    #####:   70:  Message errors;
+    %%%%%:   70-block  0
+    $$$$$:   70-block  1
+        -:   71:
+    #####:   72:  std::set<std::string> tests;
+    %%%%%:   72-block  0
+    $$$$$:   72-block  1
+    #####:   73:  for (std::vector<std::string>::const_iterator name_it = name_vec.begin();
+    #####:   74:       name_it != name_vec.end(); ++name_it) {
+    %%%%%:   74-block  0
+    %%%%%:   74-block  1
+    #####:   75:    const std::string& name = *name_it;
+    %%%%%:   75-block  0
+    #####:   76:    if (tests.count(name) != 0) {
+    %%%%%:   76-block  0
+    #####:   77:      errors << "Test " << name << " is listed more than once.\n";
+    %%%%%:   77-block  0
+    %%%%%:   77-block  1
+    %%%%%:   77-block  2
+    #####:   78:      continue;
+    %%%%%:   78-block  0
+        -:   79:    }
+        -:   80:
+    #####:   81:    if (registered_tests_.count(name) != 0) {
+    %%%%%:   81-block  0
+    %%%%%:   81-block  1
+    #####:   82:      tests.insert(name);
+    %%%%%:   82-block  0
+    %%%%%:   82-block  1
+        -:   83:    } else {
+    #####:   84:      errors << "No test named " << name
+    %%%%%:   84-block  0
+    %%%%%:   84-block  1
+    #####:   85:             << " can be found in this test suite.\n";
+    %%%%%:   85-block  0
+        -:   86:    }
+        -:   87:  }
+        -:   88:
+    #####:   89:  for (RegisteredTestIter it = registered_tests_.begin();
+    %%%%%:   89-block  0
+    #####:   90:       it != registered_tests_.end();
+    %%%%%:   90-block  0
+    #####:   91:       ++it) {
+    %%%%%:   91-block  0
+    #####:   92:    if (tests.count(it->first) == 0) {
+    %%%%%:   92-block  0
+    %%%%%:   92-block  1
+    #####:   93:      errors << "You forgot to list test " << it->first << ".\n";
+    %%%%%:   93-block  0
+    %%%%%:   93-block  1
+    %%%%%:   93-block  2
+        -:   94:    }
+        -:   95:  }
+        -:   96:
+    #####:   97:  const std::string& errors_str = errors.GetString();
+    %%%%%:   97-block  0
+    $$$$$:   97-block  1
+    #####:   98:  if (errors_str != "") {
+    %%%%%:   98-block  0
+    %%%%%:   98-block  1
+    #####:   99:    fprintf(stderr, "%s %s", FormatFileLocation(file, line).c_str(),
+    %%%%%:   99-block  0
+    %%%%%:   99-block  1
+    %%%%%:   99-block  2
+    %%%%%:   99-block  3
+    $$$$$:   99-block  4
+    $$$$$:   99-block  5
+        -:  100:            errors_str.c_str());
+    #####:  101:    fflush(stderr);
+    %%%%%:  101-block  0
+    #####:  102:    posix::Abort();
+    %%%%%:  102-block  0
+        -:  103:  }
+        -:  104:
+    #####:  105:  return registered_tests;
+    %%%%%:  105-block  0
+    %%%%%:  105-block  1
+        -:  106:}
+        -:  107:
+        -:  108:#endif  // GTEST_HAS_TYPED_TEST_P
+        -:  109:
+        -:  110:}  // namespace internal
+        -:  111:}  // namespace testing

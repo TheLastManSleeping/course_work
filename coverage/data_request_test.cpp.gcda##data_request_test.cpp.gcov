@@ -1,0 +1,199 @@
+        -:    0:Source:/home/Arter/ABC2/Google_tests/data_request_test.cpp
+        -:    0:Graph:/home/Arter/ABC2/Google_tests/CMakeFiles/Google_Tests_run.dir/data_request_test.cpp.gcno
+        -:    0:Data:/home/Arter/ABC2/Google_tests/CMakeFiles/Google_Tests_run.dir/data_request_test.cpp.gcda
+        -:    0:Runs:1
+        -:    1://
+        -:    2:// Created by Arter on 26.11.2020.
+        -:    3://
+        -:    4:
+        -:    5:#include "gtest/gtest.h"
+        -:    6:#include "../src/Memory.h"
+        -:    7:
+        4:    8:TEST(tests, NotLdOrStDataReq){
+        1:    9:    MemoryStorage mem;
+        1:   10:    CachedMem cache = CachedMem (mem);
+        -:   11:
+        1:   12:    Word ip1 = 576;
+        1:   13:    cache.Request(ip1, IType::Unsupported);
+        -:   14:
+       1*:   15:    ASSERT_EQ(true, cache.getSkip());
+        -:   16:}
+------------------
+_ZN27tests_NotLdOrStDataReq_TestC1Ev:
+        1:    8:TEST(tests, NotLdOrStDataReq){
+        1:    8-block  0
+------------------
+_ZN27tests_NotLdOrStDataReq_TestD0Ev:
+        1:    8:TEST(tests, NotLdOrStDataReq){
+        1:    8-block  0
+------------------
+_ZN27tests_NotLdOrStDataReq_TestD1Ev:
+        1:    8:TEST(tests, NotLdOrStDataReq){
+        1:    8-block  0
+------------------
+_ZN27tests_NotLdOrStDataReq_Test8TestBodyEv:
+        1:    8:TEST(tests, NotLdOrStDataReq){
+        1:    9:    MemoryStorage mem;
+        1:    9-block  0
+    $$$$$:    9-block  1
+        1:   10:    CachedMem cache = CachedMem (mem);
+        1:   10-block  0
+    $$$$$:   10-block  1
+        -:   11:
+        1:   12:    Word ip1 = 576;
+        1:   13:    cache.Request(ip1, IType::Unsupported);
+        -:   14:
+       1*:   15:    ASSERT_EQ(true, cache.getSkip());
+        1:   15-block  0
+        1:   15-block  1
+    %%%%%:   15-block  2
+    %%%%%:   15-block  3
+    %%%%%:   15-block  4
+    %%%%%:   15-block  5
+    $$$$$:   15-block  6
+    $$$$$:   15-block  7
+    $$$$$:   15-block  8
+    $$$$$:   15-block  9
+    $$$$$:   15-block 10
+    $$$$$:   15-block 11
+    $$$$$:   15-block 12
+        -:   16:}
+------------------
+        -:   17:
+        4:   18:TEST(tests, NotInLastUsedDataReq) {
+        1:   19:    MemoryStorage mem;
+        1:   20:    CachedMem cache = CachedMem (mem);
+        -:   21:    bool test1;
+        1:   22:    Word ip1 = 512;
+        1:   23:    Word ip2 = 576;
+        1:   24:    cache.setCacheDataLastUsed(ip1);
+        1:   25:    cache.setCacheDataLastUsed(ip2);
+        -:   26:
+        1:   27:    cache.Request(ip2, IType::Ld);
+        -:   28:
+        1:   29:    std::list<Word> test_line = cache.getCodeList();
+        -:   30:
+        1:   31:    if (std::find(test_line.begin(), test_line.end(), ip2) == test_line.begin()) {
+        1:   32:        test1 = true;
+        -:   33:    }
+        -:   34:
+       1*:   35:    ASSERT_EQ(test1, true);
+       1*:   36:    ASSERT_EQ(cache.getWaitCycles(), 3);
+        -:   37:}
+------------------
+_ZN31tests_NotInLastUsedDataReq_TestC1Ev:
+        1:   18:TEST(tests, NotInLastUsedDataReq) {
+        1:   18-block  0
+------------------
+_ZN31tests_NotInLastUsedDataReq_TestD0Ev:
+        1:   18:TEST(tests, NotInLastUsedDataReq) {
+        1:   18-block  0
+------------------
+_ZN31tests_NotInLastUsedDataReq_TestD1Ev:
+        1:   18:TEST(tests, NotInLastUsedDataReq) {
+        1:   18-block  0
+------------------
+_ZN31tests_NotInLastUsedDataReq_Test8TestBodyEv:
+        1:   18:TEST(tests, NotInLastUsedDataReq) {
+        1:   19:    MemoryStorage mem;
+        1:   19-block  0
+    $$$$$:   19-block  1
+        1:   20:    CachedMem cache = CachedMem (mem);
+        1:   20-block  0
+    $$$$$:   20-block  1
+        -:   21:    bool test1;
+        1:   22:    Word ip1 = 512;
+        1:   23:    Word ip2 = 576;
+        1:   24:    cache.setCacheDataLastUsed(ip1);
+        1:   25:    cache.setCacheDataLastUsed(ip2);
+        1:   25-block  0
+        -:   26:
+        1:   27:    cache.Request(ip2, IType::Ld);
+        1:   27-block  0
+        -:   28:
+        1:   29:    std::list<Word> test_line = cache.getCodeList();
+        1:   29-block  0
+    $$$$$:   29-block  1
+        -:   30:
+        1:   31:    if (std::find(test_line.begin(), test_line.end(), ip2) == test_line.begin()) {
+        1:   31-block  0
+        1:   31-block  1
+    $$$$$:   31-block  2
+        1:   32:        test1 = true;
+        1:   32-block  0
+        -:   33:    }
+        -:   34:
+       1*:   35:    ASSERT_EQ(test1, true);
+        1:   35-block  0
+        1:   35-block  1
+    %%%%%:   35-block  2
+    %%%%%:   35-block  3
+    %%%%%:   35-block  4
+    %%%%%:   35-block  5
+    $$$$$:   35-block  6
+    $$$$$:   35-block  7
+    $$$$$:   35-block  8
+    $$$$$:   35-block  9
+    $$$$$:   35-block 10
+    $$$$$:   35-block 11
+       1*:   36:    ASSERT_EQ(cache.getWaitCycles(), 3);
+        1:   36-block  0
+        1:   36-block  1
+    %%%%%:   36-block  2
+    %%%%%:   36-block  3
+    %%%%%:   36-block  4
+    %%%%%:   36-block  5
+    $$$$$:   36-block  6
+    $$$$$:   36-block  7
+    $$$$$:   36-block  8
+    $$$$$:   36-block  9
+    $$$$$:   36-block 10
+    $$$$$:   36-block 11
+    $$$$$:   36-block 12
+        -:   37:}
+------------------
+        -:   38:
+        4:   39:TEST(tests, InLastUsedDataReq){
+        1:   40:    MemoryStorage mem;
+        1:   41:    CachedMem cache = CachedMem (mem);
+        1:   42:    Word ip1 = 512;
+        1:   43:    Word ip2 = 1984;
+        1:   44:    std::map<Word, Word> test_line;
+        1:   45:    std::map<Word, Word> test_line2;
+        -:   46:
+        1:   47:    mem.Write(ip1, 2);
+        1:   48:    mem.Write(ip1 + 4, 1);
+        1:   49:    mem.Write(ip2, 2);
+        1:   50:    mem.Write(ip2 + 4, 1);
+        -:   51:
+        1:   52:    int i = 0;
+       17:   53:    while (i < 16) {
+       16:   54:        test_line[i] = 0;
+       16:   55:        i++;
+        -:   56:    }
+        -:   57:
+        1:   58:    test_line[0] = 2;
+        1:   59:    test_line[1] = 1;
+        1:   60:    i = 0;
+        -:   61:
+       64:   62:    while (i < 63) {
+       63:   63:        cache.Request(ip2 + i * 100, IType::Ld);
+       63:   64:        i++;
+        -:   65:    }
+        -:   66:
+        1:   67:    cache.Request(ip1, IType::Ld);
+        -:   68:
+        1:   69:    Word tag = ToLineAddr(ip2);
+        1:   70:    i = 0;
+        -:   71:
+       17:   72:    while (i < 16) {
+       16:   73:        Word word = mem.Read(tag + i * 4);
+       16:   74:        test_line2[ToLineOffset(tag + i * 4)] = word;
+       16:   75:        i++;
+        -:   76:    }
+        -:   77:
+       2*:   78:    ASSERT_EQ(test_line, cache.getLine());
+       1*:   79:    ASSERT_EQ(ToLineAddr(ip2), cache.getEraseTag());
+       1*:   80:    ASSERT_EQ(test_line, test_line2);
+       1*:   81:    ASSERT_EQ(136, cache.getWaitCycles());
+        -:   82:}

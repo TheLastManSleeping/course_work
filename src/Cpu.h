@@ -38,12 +38,12 @@ public:
 				_rf.Read(instrDec);
 				_csrf.Read(instrDec);
 				_exe.Execute(instrDec, _ip);
-				_mem.Request(instrDec);
+				_mem.Request(instrDec->_addr, instrDec->_type);
 				phase++;
 			}
 		case 2:
 			{
-				if (!_mem.Response(instrDec))
+				if (!_mem.Response(instrDec->_addr, instrDec->_type, instrDec->_data))
 				{
 					return;
 				}
@@ -66,6 +66,8 @@ public:
 	{
 		return _csrf.GetMessage();
 	}
+
+
 
 private:
 	Reg32 _ip;
