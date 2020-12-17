@@ -1,4 +1,0 @@
-C:\Users\Arter\AppData\Local\JetBrains\CLion2020.2\cygwin_cmake\bin\cmake.exe -G "CodeBlocks - Unix Makefiles" /home/Arter/ABC
--- Configuring done
--- Generating done
--- Build files have been written to: /home/Arter/ABC
