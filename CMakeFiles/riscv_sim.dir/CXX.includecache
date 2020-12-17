@@ -6,49 +6,53 @@
 
 #IncludeRegexTransform: 
 
-/home/Arter/ABC/src/BaseTypes.h
+/home/Arter/ABC2/src/BaseTypes.h
 
-/home/Arter/ABC/src/Cpu.h
+/home/Arter/ABC2/src/Cpu.h
 Memory.h
-/home/Arter/ABC/src/Memory.h
+/home/Arter/ABC2/src/Memory.h
 Decoder.h
-/home/Arter/ABC/src/Decoder.h
+/home/Arter/ABC2/src/Decoder.h
 RegisterFile.h
-/home/Arter/ABC/src/RegisterFile.h
+/home/Arter/ABC2/src/RegisterFile.h
 CsrFile.h
-/home/Arter/ABC/src/CsrFile.h
+/home/Arter/ABC2/src/CsrFile.h
 Executor.h
-/home/Arter/ABC/src/Executor.h
+/home/Arter/ABC2/src/Executor.h
 
-/home/Arter/ABC/src/CsrFile.h
+/home/Arter/ABC2/src/CsrFile.h
 optional
 -
 Instruction.h
-/home/Arter/ABC/src/Instruction.h
+/home/Arter/ABC2/src/Instruction.h
 
-/home/Arter/ABC/src/Decoder.h
+/home/Arter/ABC2/src/Decoder.h
 Instruction.h
-/home/Arter/ABC/src/Instruction.h
+/home/Arter/ABC2/src/Instruction.h
 
-/home/Arter/ABC/src/Executor.h
+/home/Arter/ABC2/src/Executor.h
 Instruction.h
-/home/Arter/ABC/src/Instruction.h
+/home/Arter/ABC2/src/Instruction.h
 functional
 -
 
-/home/Arter/ABC/src/Instruction.h
+/home/Arter/ABC2/src/Instruction.cpp
+Instruction.h
+/home/Arter/ABC2/src/Instruction.h
+
+/home/Arter/ABC2/src/Instruction.h
 optional
 -
 memory
 -
 BaseTypes.h
-/home/Arter/ABC/src/BaseTypes.h
+/home/Arter/ABC2/src/BaseTypes.h
 PoolAllocator.h
-/home/Arter/ABC/src/PoolAllocator.h
+/home/Arter/ABC2/src/PoolAllocator.h
 
-/home/Arter/ABC/src/Memory.h
+/home/Arter/ABC2/src/Memory.h
 Instruction.h
-/home/Arter/ABC/src/Instruction.h
+/home/Arter/ABC2/src/Instruction.h
 iostream
 -
 fstream
@@ -68,23 +72,23 @@ list
 algorithm
 -
 
-/home/Arter/ABC/src/PoolAllocator.h
+/home/Arter/ABC2/src/PoolAllocator.h
 cstddef
 -
 cstdlib
 -
 
-/home/Arter/ABC/src/RegisterFile.h
+/home/Arter/ABC2/src/RegisterFile.h
 Instruction.h
-/home/Arter/ABC/src/Instruction.h
+/home/Arter/ABC2/src/Instruction.h
 
-/home/Arter/ABC/src/main.cpp
+/home/Arter/ABC2/src/main.cpp
 Cpu.h
-/home/Arter/ABC/src/Cpu.h
+/home/Arter/ABC2/src/Cpu.h
 Memory.h
-/home/Arter/ABC/src/Memory.h
+/home/Arter/ABC2/src/Memory.h
 BaseTypes.h
-/home/Arter/ABC/src/BaseTypes.h
+/home/Arter/ABC2/src/BaseTypes.h
 optional
 -
 

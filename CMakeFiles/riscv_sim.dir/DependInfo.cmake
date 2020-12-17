@@ -4,8 +4,8 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/home/Arter/ABC/src/Instruction.cpp" "/home/Arter/ABC/CMakeFiles/riscv_sim.dir/src/Instruction.cpp.o"
-  "/home/Arter/ABC/src/main.cpp" "/home/Arter/ABC/CMakeFiles/riscv_sim.dir/src/main.cpp.o"
+  "/home/Arter/ABC2/src/Instruction.cpp" "/home/Arter/ABC2/CMakeFiles/riscv_sim.dir/src/Instruction.cpp.o"
+  "/home/Arter/ABC2/src/main.cpp" "/home/Arter/ABC2/CMakeFiles/riscv_sim.dir/src/main.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 

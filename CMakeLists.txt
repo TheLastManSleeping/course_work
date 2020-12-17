@@ -4,6 +4,7 @@ project(riscv_sim)
 set(CMAKE_CXX_STANDARD 17)
 SET(COMPILE_FLAGS "-Wall -Werr")
 
+SET(CMAKE_CXX_FLAGS "--coverage")
 SET(CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} ${GCC_COVERAGE_COMPILE_FLAGS}")
 
 file(GLOB SRC
@@ -12,3 +13,4 @@ file(GLOB SRC
         )
 
 add_executable(riscv_sim ${SRC})
+add_subdirectory(Google_tests)

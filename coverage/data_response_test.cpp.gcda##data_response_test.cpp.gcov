@@ -1,0 +1,221 @@
+        -:    0:Source:/home/Arter/ABC2/Google_tests/data_response_test.cpp
+        -:    0:Graph:/home/Arter/ABC2/Google_tests/CMakeFiles/Google_Tests_run.dir/data_response_test.cpp.gcno
+        -:    0:Data:/home/Arter/ABC2/Google_tests/CMakeFiles/Google_Tests_run.dir/data_response_test.cpp.gcda
+        -:    0:Runs:1
+        -:    1://
+        -:    2:// Created by Arter on 26.11.2020.
+        -:    3://
+        -:    4:
+        -:    5:#include "gtest/gtest.h"
+        -:    6:#include "../src/Memory.h"
+        -:    7:
+        4:    8:TEST(tests, NotLdOrStDataResp) {
+        1:    9:    MemoryStorage mem;
+        1:   10:    CachedMem cache = CachedMem (mem);
+        1:   11:    Word ip1 = 512;
+        1:   12:    Word data1 = 5;
+        -:   13:
+       1*:   14:    ASSERT_EQ(true, cache.Response(ip1, IType::Unsupported, data1));
+        -:   15:
+        -:   16:}
+------------------
+_ZN28tests_NotLdOrStDataResp_TestC1Ev:
+        1:    8:TEST(tests, NotLdOrStDataResp) {
+        1:    8-block  0
+------------------
+_ZN28tests_NotLdOrStDataResp_TestD0Ev:
+        1:    8:TEST(tests, NotLdOrStDataResp) {
+        1:    8-block  0
+------------------
+_ZN28tests_NotLdOrStDataResp_TestD1Ev:
+        1:    8:TEST(tests, NotLdOrStDataResp) {
+        1:    8-block  0
+------------------
+_ZN28tests_NotLdOrStDataResp_Test8TestBodyEv:
+        1:    8:TEST(tests, NotLdOrStDataResp) {
+        1:    9:    MemoryStorage mem;
+        1:    9-block  0
+    $$$$$:    9-block  1
+        1:   10:    CachedMem cache = CachedMem (mem);
+        1:   10-block  0
+    $$$$$:   10-block  1
+        1:   11:    Word ip1 = 512;
+        1:   12:    Word data1 = 5;
+        -:   13:
+       1*:   14:    ASSERT_EQ(true, cache.Response(ip1, IType::Unsupported, data1));
+        1:   14-block  0
+        1:   14-block  1
+    %%%%%:   14-block  2
+    %%%%%:   14-block  3
+    %%%%%:   14-block  4
+    %%%%%:   14-block  5
+    $$$$$:   14-block  6
+    $$$$$:   14-block  7
+    $$$$$:   14-block  8
+    $$$$$:   14-block  9
+    $$$$$:   14-block 10
+    $$$$$:   14-block 11
+    $$$$$:   14-block 12
+        -:   15:
+        -:   16:}
+------------------
+        -:   17:
+        4:   18:TEST(tests, NotZeroWaitCycles) {
+        1:   19:    MemoryStorage mem;
+        1:   20:    CachedMem cache = CachedMem (mem);
+        1:   21:    Word ip1 = 512;
+        1:   22:    Word data1 = 5;
+        1:   23:    cache.setWaitCycles(1);
+        -:   24:
+       1*:   25:    ASSERT_EQ(false, cache.Response(ip1, IType::St, data1));
+        -:   26:}
+------------------
+_ZN28tests_NotZeroWaitCycles_TestC1Ev:
+        1:   18:TEST(tests, NotZeroWaitCycles) {
+        1:   18-block  0
+------------------
+_ZN28tests_NotZeroWaitCycles_TestD0Ev:
+        1:   18:TEST(tests, NotZeroWaitCycles) {
+        1:   18-block  0
+------------------
+_ZN28tests_NotZeroWaitCycles_TestD1Ev:
+        1:   18:TEST(tests, NotZeroWaitCycles) {
+        1:   18-block  0
+------------------
+_ZN28tests_NotZeroWaitCycles_Test8TestBodyEv:
+        1:   18:TEST(tests, NotZeroWaitCycles) {
+        1:   19:    MemoryStorage mem;
+        1:   19-block  0
+    $$$$$:   19-block  1
+        1:   20:    CachedMem cache = CachedMem (mem);
+        1:   20-block  0
+    $$$$$:   20-block  1
+        1:   21:    Word ip1 = 512;
+        1:   22:    Word data1 = 5;
+        1:   23:    cache.setWaitCycles(1);
+        -:   24:
+       1*:   25:    ASSERT_EQ(false, cache.Response(ip1, IType::St, data1));
+        1:   25-block  0
+        1:   25-block  1
+    %%%%%:   25-block  2
+    %%%%%:   25-block  3
+    %%%%%:   25-block  4
+    %%%%%:   25-block  5
+    $$$$$:   25-block  6
+    $$$$$:   25-block  7
+    $$$$$:   25-block  8
+    $$$$$:   25-block  9
+    $$$$$:   25-block 10
+    $$$$$:   25-block 11
+    $$$$$:   25-block 12
+        -:   26:}
+------------------
+        -:   27:
+        4:   28:TEST(tests, LdDataResp) {
+        1:   29:    MemoryStorage mem;
+        1:   30:    CachedMem cache = CachedMem (mem);
+        1:   31:    Word ip1 = 512;
+        1:   32:    Word ip2 = 576;
+        1:   33:    Word data1 = 5;
+        1:   34:    std::map<Word, Word> test_line;
+        1:   35:    test_line[0] = 15;
+        1:   36:    cache.setCacheDataTableLines(ip2, test_line);
+        1:   37:    cache.setCacheDataLastUsed(ip1);
+        1:   38:    cache.setCacheDataLastUsed(ip2);
+        1:   39:    cache.Request(ip2, IType::Ld);
+        1:   40:    cache.setWaitCycles(0);
+        -:   41:
+       1*:   42:    ASSERT_EQ(true , cache.Response(ip2, IType::Ld, data1));
+       1*:   43:    ASSERT_EQ(15, cache.getData());
+        -:   44:}
+------------------
+_ZN21tests_LdDataResp_TestC1Ev:
+        1:   28:TEST(tests, LdDataResp) {
+        1:   28-block  0
+------------------
+_ZN21tests_LdDataResp_TestD0Ev:
+        1:   28:TEST(tests, LdDataResp) {
+        1:   28-block  0
+------------------
+_ZN21tests_LdDataResp_TestD1Ev:
+        1:   28:TEST(tests, LdDataResp) {
+        1:   28-block  0
+------------------
+_ZN21tests_LdDataResp_Test8TestBodyEv:
+        1:   28:TEST(tests, LdDataResp) {
+        1:   29:    MemoryStorage mem;
+        1:   29-block  0
+    $$$$$:   29-block  1
+        1:   30:    CachedMem cache = CachedMem (mem);
+        1:   30-block  0
+    $$$$$:   30-block  1
+        1:   31:    Word ip1 = 512;
+        1:   32:    Word ip2 = 576;
+        1:   33:    Word data1 = 5;
+        1:   34:    std::map<Word, Word> test_line;
+    $$$$$:   34-block  0
+        1:   35:    test_line[0] = 15;
+    $$$$$:   35-block  0
+        1:   36:    cache.setCacheDataTableLines(ip2, test_line);
+        1:   36-block  0
+        1:   36-block  1
+        1:   36-block  2
+    $$$$$:   36-block  3
+    $$$$$:   36-block  4
+        1:   37:    cache.setCacheDataLastUsed(ip1);
+        1:   38:    cache.setCacheDataLastUsed(ip2);
+        1:   38-block  0
+        1:   39:    cache.Request(ip2, IType::Ld);
+        1:   39-block  0
+        1:   40:    cache.setWaitCycles(0);
+        1:   40-block  0
+        -:   41:
+       1*:   42:    ASSERT_EQ(true , cache.Response(ip2, IType::Ld, data1));
+        1:   42-block  0
+        1:   42-block  1
+    %%%%%:   42-block  2
+    %%%%%:   42-block  3
+    %%%%%:   42-block  4
+    %%%%%:   42-block  5
+    $$$$$:   42-block  6
+    $$$$$:   42-block  7
+    $$$$$:   42-block  8
+    $$$$$:   42-block  9
+    $$$$$:   42-block 10
+    $$$$$:   42-block 11
+    $$$$$:   42-block 12
+       1*:   43:    ASSERT_EQ(15, cache.getData());
+        1:   43-block  0
+        1:   43-block  1
+    %%%%%:   43-block  2
+    %%%%%:   43-block  3
+    %%%%%:   43-block  4
+    %%%%%:   43-block  5
+    $$$$$:   43-block  6
+    $$$$$:   43-block  7
+    $$$$$:   43-block  8
+    $$$$$:   43-block  9
+    $$$$$:   43-block 10
+    $$$$$:   43-block 11
+    $$$$$:   43-block 12
+        -:   44:}
+------------------
+        -:   45:
+        4:   46:TEST(tests, StDataReq){
+        1:   47:    MemoryStorage mem;
+        1:   48:    CachedMem cache = CachedMem (mem);
+        1:   49:    Word ip1 = 512;
+        1:   50:    Word ip2 = 576;
+        1:   51:    Word data1 = 5;
+        1:   52:    std::map<Word, Word> test_line;
+        1:   53:    test_line[0] = 1;
+        1:   54:    cache.setCacheDataTableLines(ip2, test_line);
+        1:   55:    cache.setCacheDataLastUsed(ip1);
+        1:   56:    cache.setCacheDataLastUsed(ip2);
+        -:   57:
+        1:   58:    cache.Request(ip2, IType::St);
+        1:   59:    cache.setWaitCycles(0);
+        -:   60:
+       1*:   61:    ASSERT_EQ(true , cache.Response(ip2, IType::St, data1));
+       1*:   62:    ASSERT_EQ(mem.Read(ip2), cache.getDataTables()[ToLineAddr(ip2)][ToLineOffset(ip2)]);
+        -:   63:}

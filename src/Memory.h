@@ -150,69 +150,11 @@ public:
 
 	virtual void Request(Word ip) = 0;
 	virtual std::optional<Word> Response() = 0;
-	virtual void Request(InstructionPtr& instr) = 0;
-	virtual bool Response(InstructionPtr& instr) = 0;
+	virtual void Request(Word, IType) = 0;
+	virtual bool Response(Word, IType, Word&) = 0;
 	virtual void Clock() = 0;
 };
 
-
-class UncachedMem : public IMem
-{
-public:
-	explicit UncachedMem(MemoryStorage& amem)
-		: _mem(amem)
-	{
-
-	}
-
-	void Request(Word ip)
-	{
-		_requestedIp = ip;
-		_waitCycles = latency;
-	}
-
-	std::optional<Word> Response()
-	{
-		if (_waitCycles > 0)
-			return std::optional<Word>();
-		return _mem.Read(_requestedIp);
-	}
-
-	void Request(InstructionPtr& instr)
-	{
-		if (instr->_type != IType::Ld && instr->_type != IType::St)
-			return;
-
-		Request(instr->_addr);
-	}
-
-	bool Response(InstructionPtr& instr)
-	{
-		if (instr->_type != IType::Ld && instr->_type != IType::St)
-			return true;
-
-		if (_waitCycles != 0)
-			return false;
-
-		if (instr->_type == IType::Ld)
-			instr->_data = _mem.Read(instr->_addr);
-		else if (instr->_type == IType::St)
-			_mem.Write(instr->_addr, instr->_data);
-
-		return true;
-	}
-
-	void Clock()
-	{
-		if (_waitCycles > 0)
-			--_waitCycles;
-	}
-private:
-	static constexpr size_t latency = 120;
-	Word _requestedIp = 0;
-	size_t _waitCycles = 0;
-	MemoryStorage& _mem;
-};
 
 class CachedMem : public IMem
 {
@@ -231,7 +173,6 @@ public:
 		if (std::find(_code_cache.last_used.begin(), _code_cache.last_used.end(), tag) != _code_cache.last_used.end())
 		{
 			_code_cache.last_used.remove(tag);
-
 		}
 
 		else
@@ -239,6 +180,7 @@ public:
 			int i = 0;
 			while (i < lineSizeWords) {
 				Word word = _mem.Read(tag + i * 4);
+
 				line[ToLineOffset(tag + i * 4)] = word;
 				i++;
 			}
@@ -246,13 +188,14 @@ public:
 
 			if (_code_cache.tables.size() == _code_lines)
 			{
-				Word erase_tag = _code_cache.last_used.back();
+				erase_tag = _code_cache.last_used.back();
 				_code_cache.last_used.remove(erase_tag);
 				_code_cache.tables.erase(erase_tag);
 			}
 			_waitCycles = latency;
 		}
 		_code_cache.last_used.push_front(tag);
+
 	}
 
 	std::optional<Word> Response()
@@ -260,17 +203,19 @@ public:
 		if (_waitCycles > 0)
 			return std::optional<Word>();
 		return _code_cache.tables[ToLineAddr(_requestedIp)][ToLineOffset(_requestedIp)];
+
 	}
 
-	void Request(InstructionPtr& instr)
+	void Request(Word _addr, IType _type)
 	{
-		if (instr->_type != IType::Ld && instr->_type != IType::St)
+		if (_type != IType::Ld && _type != IType::St)
 		{
+		    skip = true;
 			return;
 		}
 		else {
-			_requestedIp = instr->_addr;
-			Word tag = ToLineAddr(_requestedIp);
+			_requestedIp = _addr;
+            Word tag = ToLineAddr(_requestedIp);
 			if (std::find(_data_cache.last_used.begin(), _data_cache.last_used.end(), tag) != _data_cache.last_used.end())
 			{
 				_data_cache.last_used.remove(tag);
@@ -290,9 +235,9 @@ public:
 
 				if (_data_cache.tables.size() == _data_lines)
 				{
-					Word erase_tag = _data_cache.last_used.back();
+					erase_tag = _data_cache.last_used.back();
 					_data_cache.last_used.remove(erase_tag);
-					int i = 0;
+					i = 0;
 					while (i < lineSizeWords) {
 						_mem.Write(erase_tag + i * 4, _data_cache.tables[erase_tag][ToLineOffset(erase_tag + i * 4)]);
 						i++;
@@ -306,20 +251,22 @@ public:
 		return;
 	}
 
-	bool Response(InstructionPtr& instr)
+	bool Response(Word _addr, IType _type, Word& _data)
 	{
-		if (instr->_type != IType::Ld && instr->_type != IType::St)
+		if (_type != IType::Ld && _type != IType::St)
 			return true;
 
 		if (_waitCycles != 0)
 			return false;
 
-		if (instr->_type == IType::Ld)
-			instr->_data = _data_cache.tables[ToLineAddr(instr->_addr)][ToLineOffset(instr->_addr)];
+		if (_type == IType::Ld) {
+            _data = _data_cache.tables[ToLineAddr(_addr)][ToLineOffset(_addr)];
+            data = _data;
+        }
 		else
 		{
-			_data_cache.tables[ToLineAddr(instr->_addr)][ToLineOffset(instr->_addr)] = instr->_data;
-			_mem.Write(instr->_addr, instr->_data);
+			_data_cache.tables[ToLineAddr(_addr)][ToLineOffset(_addr)] = _data;
+			_mem.Write(_addr, _data);
 		}
 		return true;
 	}
@@ -328,17 +275,83 @@ public:
 	void Clock()
 	{
 		if (_waitCycles > 0)
-			--_waitCycles = 0;
+			_waitCycles = 0;
 	}
+
+    size_t getWaitCycles()
+    {
+        return _waitCycles;
+    }
+
+    void setWaitCycles(size_t waitCycles) {
+        _waitCycles = waitCycles;
+    }
+
+
+    std::list<Word> getCodeList() const {
+        return _code_cache.last_used;
+    }
+
+
+    bool getSkip() const {
+        return skip;
+    }
+
+    void setCacheCodeTableLines(Word ip, std::map<Word, Word> custom_line) {
+        _requestedIp = ip;
+        Word tag = ToLineAddr(_requestedIp);
+        _code_cache.tables[tag] = custom_line;
+    }
+
+    void setCacheDataTableLines(Word ip, std::map<Word, Word> custom_line){
+        _requestedIp = ip;
+        Word tag = ToLineAddr(_requestedIp);
+        _data_cache.tables[tag] = custom_line;
+    }
+
+
+    void setCacheCodeLastUsed(Word ip) {
+        _requestedIp = ip;
+        Word tag = ToLineAddr(_requestedIp);
+        _code_cache.last_used.push_front(tag);
+    }
+
+    void setCacheDataLastUsed(Word ip){
+        _requestedIp = ip;
+        Word tag = ToLineAddr(_requestedIp);
+        _data_cache.last_used.push_front(tag);
+	}
+
+    std::map<Word, Word> getLine() const {
+        return line;
+    }
+
+    Word getEraseTag() const {
+        return erase_tag;
+    }
+
+    std::map<Word, std::map<Word, Word>> getDataTables(){
+        return _data_cache.tables;
+    }
+
+	Word getData(){
+	    return data;
+	}
+
 private:
 	static constexpr size_t latency = 136;
+	Word data = 0;
+    Word erase_tag = 0;
 	Word _requestedIp = 0;
 	size_t _waitCycles = 0;
 	MemoryStorage& _mem;
-	const int _data_lines = 64;
-	const int _code_lines = 8;
+	const int _data_lines = 64;  // 4096 / 64
+	const int _code_lines = 8;  // 512 / 64
 	std::map<Word, Word> line;
 
+
+    bool skip = false;
+    
 	struct Cache
 	{
 		std::list<Word> last_used;

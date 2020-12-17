@@ -1,0 +1,110 @@
+        -:    0:Source:/home/Arter/ABC2/Google_tests/code_request_test.cpp
+        -:    0:Graph:/home/Arter/ABC2/Google_tests/CMakeFiles/Google_Tests_run.dir/code_request_test.cpp.gcno
+        -:    0:Data:/home/Arter/ABC2/Google_tests/CMakeFiles/Google_Tests_run.dir/code_request_test.cpp.gcda
+        -:    0:Runs:1
+        -:    1://
+        -:    2:// Created by Arter on 19.11.2020.
+        -:    3://
+        -:    4:#include "gtest/gtest.h"
+        -:    5:#include "../src/Memory.h"
+        -:    6:
+        -:    7:
+        4:    8:TEST(tests, NotInLastUsedCodeReq) {
+        1:    9:    MemoryStorage mem;
+        1:   10:    CachedMem cache = CachedMem (mem);
+        -:   11:    bool test1;
+        1:   12:    Word ip2 = 576;
+        -:   13:
+        1:   14:    cache.Request(ip2);
+        1:   15:    std::list<Word> test_list = cache.getCodeList();
+        -:   16:
+        1:   17:     if (std::find(test_list.begin(), test_list.end(), ip2) == test_list.begin()){
+        1:   18:         test1 = true;
+        -:   19:     }
+        -:   20:
+       1*:   21:    ASSERT_EQ(test1, true);
+        -:   22:}
+------------------
+_ZN31tests_NotInLastUsedCodeReq_TestC1Ev:
+        1:    8:TEST(tests, NotInLastUsedCodeReq) {
+        1:    8-block  0
+------------------
+_ZN31tests_NotInLastUsedCodeReq_TestD0Ev:
+        1:    8:TEST(tests, NotInLastUsedCodeReq) {
+        1:    8-block  0
+------------------
+_ZN31tests_NotInLastUsedCodeReq_TestD1Ev:
+        1:    8:TEST(tests, NotInLastUsedCodeReq) {
+        1:    8-block  0
+------------------
+_ZN31tests_NotInLastUsedCodeReq_Test8TestBodyEv:
+        1:    8:TEST(tests, NotInLastUsedCodeReq) {
+        1:    9:    MemoryStorage mem;
+        1:    9-block  0
+    $$$$$:    9-block  1
+        1:   10:    CachedMem cache = CachedMem (mem);
+        1:   10-block  0
+    $$$$$:   10-block  1
+        -:   11:    bool test1;
+        1:   12:    Word ip2 = 576;
+        -:   13:
+        1:   14:    cache.Request(ip2);
+        1:   15:    std::list<Word> test_list = cache.getCodeList();
+        1:   15-block  0
+    $$$$$:   15-block  1
+        -:   16:
+        1:   17:     if (std::find(test_list.begin(), test_list.end(), ip2) == test_list.begin()){
+        1:   17-block  0
+        1:   17-block  1
+    $$$$$:   17-block  2
+        1:   18:         test1 = true;
+        1:   18-block  0
+        -:   19:     }
+        -:   20:
+       1*:   21:    ASSERT_EQ(test1, true);
+        1:   21-block  0
+        1:   21-block  1
+    %%%%%:   21-block  2
+    %%%%%:   21-block  3
+    %%%%%:   21-block  4
+    %%%%%:   21-block  5
+    $$$$$:   21-block  6
+    $$$$$:   21-block  7
+    $$$$$:   21-block  8
+    $$$$$:   21-block  9
+    $$$$$:   21-block 10
+    $$$$$:   21-block 11
+        -:   22:}
+------------------
+        -:   23:
+        4:   24:TEST(tests, InLastUsedCodeReq) {
+        1:   25:    MemoryStorage mem;
+        1:   26:    CachedMem cache = CachedMem (mem);
+        1:   27:    Word ip1 = 512;
+        1:   28:    Word ip2 = 516;
+        1:   29:    Word ip3 = 2000;
+        1:   30:    mem.Write(ip1, 2);
+        1:   31:    mem.Write(ip2, 1);
+        1:   32:    std::map<Word, Word> test_line;
+        1:   33:    int i = 0;
+        -:   34:
+       17:   35:    while (i < 16) {
+       16:   36:        test_line[i] = 0;
+       16:   37:        i++;
+        -:   38:    }
+        -:   39:
+        1:   40:    test_line[0] = 2;
+        1:   41:    test_line[1] = 1;
+        1:   42:    i = 0;
+        -:   43:
+        8:   44:    while (i < 7) {
+        7:   45:        cache.Request(ip3 + i * 100);
+        7:   46:        i++;
+        -:   47:    }
+        -:   48:
+        1:   49:    cache.Request(ip1);
+        -:   50:
+       2*:   51:    ASSERT_EQ(test_line, cache.getLine());
+       1*:   52:    ASSERT_EQ(ToLineAddr(ip3), cache.getEraseTag());
+       1*:   53:    ASSERT_EQ(136, cache.getWaitCycles());
+        -:   54:}
